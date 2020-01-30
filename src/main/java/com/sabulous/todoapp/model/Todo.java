@@ -17,6 +17,8 @@ public class Todo {
 
     private Date deadline;
 
+    private String createdBy;
+
     private Date creationDate;
 
     private Date completionDate;
@@ -69,6 +71,14 @@ public class Todo {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
 }
