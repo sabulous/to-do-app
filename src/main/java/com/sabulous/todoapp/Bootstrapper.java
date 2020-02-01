@@ -5,8 +5,13 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import com.sabulous.todoapp.model.Todo;
 import com.sabulous.todoapp.repositories.TodoRepository;
@@ -38,24 +43,33 @@ public class Bootstrapper implements ApplicationListener<ContextRefreshedEvent> 
         List<Todo> list = new ArrayList<>();
 
         TodoBuilder tb = new TodoBuilder();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.uuuu", Locale.getDefault());
+        LocalDate fromDate = LocalDate.now(ZoneId.of("Europe/Istanbul"));
+        //String tempFromDate = fromDate.format(formatter);
+        Calendar c = Calendar.getInstance(); 
+        c.set(fromDate.getYear(), fromDate.getMonthValue(), fromDate.getDayOfMonth());
+    
         list.add(
             tb.name("todo 1")
-            .creationDate(new Date(System.currentTimeMillis() - dayLen * 10))
-            .deadline(new Date(System.currentTimeMillis() + dayLen * 5))
-            .completionDate(new Date(System.currentTimeMillis() - dayLen * 2))
+            .creationDate(new Date(c.getTimeInMillis()))
+            .deadline(new Date(c.getTimeInMillis() + Long.valueOf("150000000000")))
+            .completionDate(new Date(c.getTimeInMillis()))
             .createdBy("user")
             .status(1)
+            .completed(false)
             .build()
         );
 
         TodoBuilder tb2 = new TodoBuilder();
         list.add(
             tb2.name("todo 2")
-            .creationDate(new Date(System.currentTimeMillis() - dayLen * 40))
-            .deadline(new Date(System.currentTimeMillis() + dayLen * 2))
-            .completionDate(new Date(System.currentTimeMillis() - dayLen * 6))
+            .creationDate(new Date(c.getTimeInMillis()))
+            .deadline(new Date(c.getTimeInMillis() + Long.valueOf("340000000000")))
+            .completionDate(new Date(c.getTimeInMillis()))
             .createdBy("user 2")
             .status(0)
+            .completed(true)
             .build()
         );
 
@@ -63,11 +77,12 @@ public class Bootstrapper implements ApplicationListener<ContextRefreshedEvent> 
 
         list.add(
             tb3.name("todo 3")
-            .creationDate(new Date(System.currentTimeMillis() - dayLen * 1))
-            .deadline(new Date(System.currentTimeMillis() + dayLen * 0))
+            .creationDate(new Date(c.getTimeInMillis()))
+            .deadline(new Date(c.getTimeInMillis() + Long.valueOf("50000000000")))
             .completionDate(null)
             .createdBy("user 3")
             .status(-1)
+            .completed(false)
             .build()
         );
 

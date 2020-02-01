@@ -44,5 +44,10 @@ public class TodoBuilder {
         todo.setStatus(status);
         return this;
     }
+
+    public TodoBuilder completed(boolean completed) {
+        todo.setCompleted(completed);
+        return this;
+    }
     
 }
