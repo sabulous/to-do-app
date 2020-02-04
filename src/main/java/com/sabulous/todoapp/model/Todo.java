@@ -97,6 +97,14 @@ public class Todo {
         this.createdBy = createdBy;
     }
 
+    public List<Item> getTodoItems() {
+        return todoItems;
+    }
+
+    public void setTodoItems(List<Item> todoItems) {
+        this.todoItems = todoItems;
+    }
+
     public void print() {
         System.out.print("id=");
         if(this.id != null) {

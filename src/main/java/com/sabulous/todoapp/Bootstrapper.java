@@ -14,14 +14,17 @@ import java.util.List;
 import java.util.Locale;
 
 import com.sabulous.todoapp.model.Todo;
+import com.sabulous.todoapp.model.User;
 import com.sabulous.todoapp.repositories.TodoRepository;
 import com.sabulous.todoapp.services.TodoBuilder;
 import com.sabulous.todoapp.services.TodoService;
+import com.sabulous.todoapp.services.UserService;
 
 @Component
 public class Bootstrapper implements ApplicationListener<ContextRefreshedEvent> {
     private TodoRepository todoRepository;
     private TodoService todoService;
+    private UserService userService;
 
     @Autowired
     public void setTodoRepository(TodoRepository todoRepository) {
@@ -33,9 +36,15 @@ public class Bootstrapper implements ApplicationListener<ContextRefreshedEvent> 
         this.todoService = todoService;
     }  
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadTodos();
+        loadUsers();
     }
 
     private void loadTodos() {
@@ -67,7 +76,7 @@ public class Bootstrapper implements ApplicationListener<ContextRefreshedEvent> 
             .creationDate(new Date(c.getTimeInMillis()))
             .deadline(new Date(c.getTimeInMillis() + Long.valueOf("340000000000")))
             .completionDate(new Date(c.getTimeInMillis()))
-            .createdBy("user 2")
+            .createdBy("user")
             .status(0)
             .completed(true)
             .build()
@@ -80,13 +89,31 @@ public class Bootstrapper implements ApplicationListener<ContextRefreshedEvent> 
             .creationDate(new Date(c.getTimeInMillis()))
             .deadline(new Date(c.getTimeInMillis() + Long.valueOf("50000000000")))
             .completionDate(null)
-            .createdBy("user 3")
+            .createdBy("user")
             .status(-1)
             .completed(false)
             .build()
         );
 
         todoRepository.saveAll(list);
+    }
+
+    private void loadUsers() {        
+        User user1 = new User();
+        user1.setId(1);
+        user1.setUsername("username");
+        user1.setEmail("email");
+        user1.setPassword("userPw");
+
+        userService.saveOrUpdate(user1);
+        
+        User user2 = new User();
+        user2.setId(2);
+        user2.setEmail("user2Email");
+        user2.setUsername("user2name");
+        user2.setPassword("user2Pw");
+
+        userService.saveOrUpdate(user2);
     }
     
 }

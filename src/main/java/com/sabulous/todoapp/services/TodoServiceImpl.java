@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.sabulous.todoapp.model.Todo;
-import com.sabulous.todoapp.model.User;
 import com.sabulous.todoapp.repositories.TodoRepository;
-import com.sabulous.todoapp.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TodoServiceImpl implements TodoService {
 
-    private UserRepository userRepository;
     private TodoRepository todoRepository;
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Autowired
     public void setTodoRepository(TodoRepository todoRepository) {
